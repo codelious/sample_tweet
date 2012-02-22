@@ -7,18 +7,17 @@ describe "Paginas estaticas" do
   
   describe "Pagina Home" do
     
+    before { visit root_path } 
+    
     it "debe tener el contenido 'Sample App'" do
-      visit root_path
       page.should have_content('Sample App')
     end
     
     it "debe tener un h1 'Sample App'" do
-      visit root_path
       page.should have_selector('h1', :text => 'Sample App')
     end
 
     it "debe tener titulo 'Home'" do
-      visit root_path
       page.should have_selector('title',
                         :text => "#{base_title} | Home")
     end
