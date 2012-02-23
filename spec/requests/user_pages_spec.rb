@@ -40,6 +40,23 @@ describe "UserPages" do
       it "debe crear un usuario" do
         expect { click_button "Sign up" }.to change(User, :count).by(1)
       end
+      
+      describe "despues de guardar usuario" do
+        before { click_button "Sign up" }
+        let(:user) { User.find_by_email('user@example.com') }
+
+        it { should have_selector('title', text: user.name) }
+        it { should have_selector('div.flash.success', text: 'Bienvenido') }
+      end
+    end
+    
+    describe "mensajes de error" do
+      before { click_button "Sign up" }
+      
+      let(:error) { 'errors prohiben que este usuario se guarde'}
+      
+      it { should have_selector('title', text: 'Sign up') }
+      it { should have_content(error) }
     end
   end
   
