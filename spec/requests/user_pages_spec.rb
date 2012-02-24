@@ -61,4 +61,40 @@ describe "UserPages" do
     end
   end
   
+  describe "edit" do
+    let(:user) { FactoryGirl.create(:user) }
+    before { visit edit_user_path(user) }
+    
+    describe "page" do
+      it { should have_selector('h1', text: "Edit user") }
+      it { should have_selector('title', text: "Edit user") }
+      it { should have_link('change', href: 'http://gravatar.com/emails') }
+    end
+    
+    describe "con informacion invalida" do
+      let(:error) { '1 error prohiben que este usuario se guarde' }
+      before { click_button "Update" }
+      
+      it { should have_content(error) }
+    end
+    
+    describe "con informacion valida" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:new_name) { "New Name" }
+      let(:new_email) { "new@example.com" }
+      before do
+        fill_in "Name", with: new_name
+        fill_in "Email", with: new_email
+        fill_in "Password", with: user.password
+        fill_in "Confirmation", with: user.password
+        click_button "Update"
+      end
+      
+      it { should have_selector('title', text: new_name) }
+      it { should have_selector('div.flash.success') }
+      it { should have_link('Sign out', :href => signout_path) }
+      specify { user.reload.name.should == new_name }
+      specify { user.reload.email.should == new_email }
+    end
+  end
 end
