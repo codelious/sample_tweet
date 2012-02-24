@@ -11,10 +11,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      sign_in @user
       flash[:success] = "Bienvenido a Sample Tweet!"
       redirect_to @user
     else
       render 'new'
     end
+  end
+  
+  def destroy
+    sign_out
+    redirec_to root_path
   end
 end
