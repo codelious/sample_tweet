@@ -28,16 +28,20 @@ describe "Authentication" do
     
     describe "con informacion valida" do
       let(:user) { FactoryGirl.create(:user) }
+      #before { valid_signin(user) }
       before do
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
         click_button "Sign in"
       end
       
-      it { should have_selector('title', text: user.name )}
+      it { should have_selector('title', text: user.name ) }
+      
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
+      
       it { should_not have_link('Sign in', href: signin_path) }
       
       describe "followed by signout" do
@@ -63,6 +67,11 @@ describe "Authentication" do
           before  { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
         end
+      end
+      
+      describe "vistando index de usuarios" do
+        before { visit users_path }
+        it { should have_selector('title', text: 'Sign in')}
       end
     end
     
