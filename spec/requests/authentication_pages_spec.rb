@@ -82,6 +82,26 @@ describe "Authentication" do
       end
     end
     
+    describe "para usuario no autenticado" do
+      let(:user) { FactoryGirl.create(:user) }
+      
+      describe "cuando se intenta visitar una pagina protegida" do
+        before do
+          visit edit_user_path(user)
+          fill_in "Email", with: user.email
+          fill_in "Password", with: user.password
+          click_button "Sign in"
+        end
+      end
+      
+      describe "after signing in" do
+        
+        it "debe renderizar la pagina deseada protegida" do
+          page.should have_selector('title', text: 'Edit user')
+        end
+      end
+    end
+    
   end
 
 end
