@@ -46,5 +46,25 @@ describe "Authentication" do
       end
     end
   end
+  
+  describe "autorizacion" do
+    
+    describe "para usuarios no autenticados" do
+      let(:user) { Factory(:user) }
+      
+      describe "en el controlador de usuarios" do
+        
+        describe "visitando la pagina de edicion" do
+          before { visit edit_user_path(user) }
+          it { should have_selector('title', text: 'Sign in')}
+        end
+        
+        describe "enviando la accion update" do
+          before  { put user_path(user) }
+          specify { response.should redirect_to(signin_path) }
+        end
+      end
+    end
+  end
 
 end
