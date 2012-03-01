@@ -26,8 +26,9 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    sign_out
-    redirec_to root_path
+    User.find(params[:id]).destroy
+    flash[:success] = "Usuario destruido."
+    redirect_to users_path
   end
   
   def edit
@@ -54,5 +55,9 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
+    end
+    
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
     end
 end
