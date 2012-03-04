@@ -49,9 +49,9 @@ class UsersController < ApplicationController
   
   private
   
-    def signed_in_user
-      redirect_to signin_path, notice: "Por favor autentiquese." unless signed_in?      
-    end
+    #def signed_in_user
+    #  redirect_to signin_path, notice: "Por favor autentiquese." unless signed_in?      
+    #end
     
     def correct_user
       @user = User.find(params[:id])

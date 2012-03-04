@@ -73,6 +73,22 @@ describe "Authentication" do
         before { visit users_path }
         it { should have_selector('title', text: 'Sign in')}
       end
+      
+      describe "en el controlador de Microposts" do
+        
+        describe "enviando a la accion 'create'" do
+          before { post microposts_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+        
+        describe "enviando a la accion 'destroy'" do
+          before do
+            micropost = FactoryGirl.create(:micropost)
+            delete micropost_path(micropost)
+          end
+          specify { response.should redirect_to(signin_path) }
+        end
+      end
     end
     
     describe "como usuario incorrecto" do
