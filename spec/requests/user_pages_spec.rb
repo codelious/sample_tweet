@@ -116,7 +116,7 @@ describe "UserPages" do
     describe "mensajes de error" do
       before { click_button "Sign up" }
       
-      let(:error) { 'errors prohiben que este usuario se guarde'}
+      let(:error) { 'errors prohiben que este user se guarde'}
       
       it { should have_selector('title', text: 'Sign up') }
       it { should have_content(error) }
@@ -137,7 +137,7 @@ describe "UserPages" do
     end
     
     describe "con informacion invalida" do
-      let(:error) { '1 error prohiben que este usuario se guarde' }
+      let(:error) { '1 error prohiben que este user se guarde' }
       before { click_button "Update" }
       
       it { should have_content(error) }

@@ -1,10 +1,10 @@
-<% if @user.errors.any? %>
+<% if object.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> 
-        prohiben que este usuario se guarde:</h2>
+    <h2><%= pluralize(object.errors.count, "error") %> 
+        prohiben que este <%= object.class.to_s.underscore.humanize.downcase %> se guarde:</h2>
     <p>Hay problemas con los siguientes campos:</p>
     <ul>
-    <% @user.errors.full_messages.each do |msg| %>
+    <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
