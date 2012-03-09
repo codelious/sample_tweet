@@ -31,6 +31,16 @@ describe "Paginas estaticas" do
           page.should have_selector("tr##{item.id}", text: item.content)
         end
       end
+      
+      describe "conteo de siguiendo/seguidores" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before { user.follow!(other_user) }
+        
+        it { should have_selector('a', href: following_user_path(user),
+                                        content: "0 following") }
+        it { should have_selector('a', href: followers_user_path(user),
+                                        content: "1 follower") }
+      end
     end
   end
   
