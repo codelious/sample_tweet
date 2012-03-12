@@ -67,6 +67,16 @@ describe "Authentication" do
           before  { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
         end
+        
+        describe "visitando la pagina 'following'" do
+          before { visit following_user_path(user) }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+        
+        describe "visitado la pagina 'followers'" do
+          before { visit followers_user_path(user) }
+          it { should have_selector('title', text: 'Sign in') }
+        end
       end
       
       describe "vistando index de usuarios" do
@@ -86,6 +96,18 @@ describe "Authentication" do
             micropost = FactoryGirl.create(:micropost)
             delete micropost_path(micropost)
           end
+          specify { response.should redirect_to(signin_path) }
+        end
+      end
+      
+      describe "en el controlador de Relationships" do
+        describe "enviando a la accion 'create'" do
+          before { post relationships_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+        
+        describe "enviando a la accion 'destroy'" do
+          before { delete relationship_path(1) }
           specify { response.should redirect_to(signin_path) }
         end
       end
